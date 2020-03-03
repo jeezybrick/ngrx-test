@@ -6,9 +6,10 @@ import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
 
-import { SidenavComponent } from './components/sidenav/sidenav.component';
-import { AreYouSureDialogComponent } from './components/are-you-sure-dialog/are-you-sure-dialog.component';
+import { SidenavComponent } from '@shared/components/sidenav/sidenav.component';
+import { AreYouSureDialogComponent } from '@shared/components/are-you-sure-dialog/are-you-sure-dialog.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { AreYouSureDialogComponent } from './components/are-you-sure-dialog/are-
     MatButtonModule,
     MatSidenavModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
+    MatDialogModule
   ],
   exports: [
     SidenavComponent,

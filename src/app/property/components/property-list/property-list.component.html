@@ -1,1 +1,17 @@
-<p>property-list works!</p>
+<div class="list-wrap">
+  <app-property-item class="item-wrap"
+                     *ngFor="let property of (properties$ | async)"
+                     [id]="property.id"
+                     [title]="property.title"
+                     [description]="property.description"
+                     (updateButtonClicked)="onUpdateButtonClicked($event)"
+                     (removeButtonClicked)="onRemoveButtonClicked($event)">
+  </app-property-item>
+
+  <div class="item-wrap">
+    <mat-card class="add-item-card" (click)="onAddButtonClicked()">
+      <mat-icon>add</mat-icon>
+    </mat-card>
+  </div>
+
+</div>

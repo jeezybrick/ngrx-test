@@ -1,0 +1,12 @@
+@mixin material-icon-button-size($sizeValue: 40px) {
+  width: $sizeValue;
+  height: $sizeValue;
+  line-height: $sizeValue;
+}
+
+@mixin material-icon-size($sizeValue: 24px) {
+  width: $sizeValue;
+  height: $sizeValue;
+  font-size: $sizeValue;
+  line-height: $sizeValue;
+}

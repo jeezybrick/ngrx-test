@@ -1,1 +1,40 @@
-<p>are-you-sure-dialog works!</p>
+<div class="are-you-sure-dialog-wrap">
+  <div class="header" mat-dialog-title>
+    {{ 'Are you sure' }}
+  </div>
+
+  <button
+    class="close-icon"
+    mat-icon-button
+    aria-label="'Close' | translate"
+    [mat-dialog-close]="false"
+  >
+    <mat-icon>clear</mat-icon>
+  </button>
+
+  <div class="description" *ngIf="data.descriptionText">
+    {{ data.descriptionText }}
+  </div>
+
+  <div
+    class="action-buttons-wrap"
+  >
+    <button
+      class="submit-button"
+      mat-flat-button
+      color="warn"
+      [mat-dialog-close]="true"
+    >
+      {{ data.submitButtonText }}
+    </button>
+    <button
+      class="close"
+      mat-button
+      [mat-dialog-close]="false"
+      cdkFocusInitial
+      color="primary"
+    >
+      {{ data.cancelButtonText || 'cancel' }}
+    </button>
+  </div>
+</div>

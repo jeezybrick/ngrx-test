@@ -1,0 +1,28 @@
+@import 'mixins';
+
+.list-wrap {
+  display: flex;
+  justify-content: flex-start;
+  align-items: stretch;
+  flex-wrap: wrap;
+
+  .item-wrap {
+    width: 360px;
+    padding: 10px;
+  }
+
+  .add-item-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    box-sizing: border-box;
+    cursor: pointer;
+
+    .mat-icon {
+      @include material-icon-size(100px);
+    }
+
+  }
+
+}

@@ -1,0 +1,39 @@
+.are-you-sure-dialog-wrap {
+  position: relative;
+  padding: 30px 0;
+}
+
+.header {
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.close-icon {
+  position: absolute;
+  right: -20px;
+  top: -20px;
+}
+
+.description {
+  font-size: 1rem;
+  text-align: center;
+}
+
+.action-buttons-wrap {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+
+  button {
+    min-width: 150px;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+
+    &.submit-button {
+      color: #ffffff;
+      font-size: 0.8rem;
+    }
+  }
+}
