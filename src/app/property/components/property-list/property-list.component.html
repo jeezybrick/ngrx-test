@@ -1,6 +1,7 @@
 <div class="list-wrap">
   <app-property-item class="item-wrap"
                      *ngFor="let property of (properties$ | async)"
+                     [property]="property"
                      [id]="property.id"
                      [title]="property.title"
                      [description]="property.description"

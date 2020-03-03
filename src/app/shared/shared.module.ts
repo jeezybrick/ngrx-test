@@ -7,6 +7,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { SidenavComponent } from '@shared/components/sidenav/sidenav.component';
 import { AreYouSureDialogComponent } from '@shared/components/are-you-sure-dialog/are-you-sure-dialog.component';
@@ -27,6 +28,8 @@ import { AreYouSureDialogComponent } from '@shared/components/are-you-sure-dialo
     MatDialogModule
   ],
   exports: [
+    FormsModule,
+    ReactiveFormsModule,
     SidenavComponent,
     AreYouSureDialogComponent
   ],

@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-add-property-dialog',
   templateUrl: './add-property-dialog.component.html',
   styleUrls: ['./add-property-dialog.component.scss']
 })
-export class AddPropertyDialogComponent implements OnInit {
+export class AddPropertyDialogComponent {
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
+  constructor(
+    @Inject(MAT_DIALOG_DATA)
+    public data: any
+  ) {}
 
 }

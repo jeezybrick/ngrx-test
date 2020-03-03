@@ -1,1 +1,16 @@
-<p>add-property-dialog works!</p>
+<div class="dialog-wrap">
+  <div class="header" mat-dialog-title>
+    {{ 'Add property' }}
+  </div>
+
+  <button
+    class="close-icon"
+    mat-icon-button
+    aria-label="Close"
+    [mat-dialog-close]
+  >
+    <mat-icon>clear</mat-icon>
+  </button>
+
+  <app-modify-property-form></app-modify-property-form>
+</div>

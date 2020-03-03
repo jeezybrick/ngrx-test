@@ -9,6 +9,9 @@ import { PropertyService } from '@app/property/services/property.service';
 import { Property } from '@app/property/interfaces/property.interface';
 import { AreYouSureDialogComponent } from '@shared/components/are-you-sure-dialog/are-you-sure-dialog.component';
 import { AreYouSureDialogData } from '@shared/interfaces/are-you-sure-dialog-data.interface';
+import { AddPropertyDialogComponent } from '@app/property/components/add-property-dialog/add-property-dialog.component';
+import { UpdatePropertyDialogComponent } from '@app/property/components/update-property-dialog/update-property-dialog.component';
+import { MatDialogConfig } from '@angular/material/dialog/dialog-config';
 
 @Component({
   selector: 'app-property-list',
@@ -35,11 +38,15 @@ export class PropertyListComponent implements OnInit, OnDestroy {
   }
 
   public onAddButtonClicked(): void {
-
+    this.dialog.open(
+      AddPropertyDialogComponent, this.getModifyPropertiesDialogConfig()
+    );
   }
 
-  public onUpdateButtonClicked(propertyId: number): void {
-
+  public onUpdateButtonClicked(property: Property): void {
+    this.dialog.open(
+      UpdatePropertyDialogComponent, this.getModifyPropertiesDialogConfig(property)
+    );
   }
 
   public onRemoveButtonClicked(propertyId: number): void {
@@ -64,6 +71,14 @@ export class PropertyListComponent implements OnInit, OnDestroy {
   private getAreYouSureDialogData(): AreYouSureDialogData {
     return {
       submitButtonText: 'delete'
+    };
+  }
+
+  private getModifyPropertiesDialogConfig(data: Partial<Property> | null = null): MatDialogConfig {
+    return {
+      disableClose: true,
+      minWidth: '400px',
+      data
     };
   }
 

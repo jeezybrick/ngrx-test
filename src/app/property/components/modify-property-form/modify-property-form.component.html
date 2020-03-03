@@ -1,0 +1,56 @@
+<form novalidate [formGroup]="modifyPropertyForm" (ngSubmit)="onFormSubmit()">
+
+  <div class="block">
+    <div class="title">Title</div>
+
+    <mat-form-field class="input-full-width" appearance="outline">
+      <input
+        #title
+        matInput
+        formControlName="title"
+        [maxlength]="maxLength.title"
+      />
+      <mat-hint align="end"
+      >{{ title.value.length }} / {{ maxLength.title }}
+      </mat-hint
+      >
+    </mat-form-field>
+
+    <ng-container
+      *ngIf="formControls.title.errors && formControls.title.touched"
+    >
+      <mat-error *ngIf="formControls.title.errors.required">
+        {{ 'Required field' }}
+      </mat-error>
+    </ng-container>
+  </div>
+
+  <div class="block">
+    <div class="title">Description</div>
+
+    <mat-form-field class="input-full-width" appearance="outline">
+            <textarea
+              #description
+              matInput
+              [rows]="messageTextareaRows"
+              formControlName="description"
+              [maxlength]="maxLength.description"
+            ></textarea>
+      <mat-hint align="end"
+      >{{ description.value.length }} /
+        {{ maxLength.description }}
+      </mat-hint
+      >
+    </mat-form-field>
+    <ng-container
+      *ngIf="
+              formControls.description.errors &&
+              formControls.description.touched
+            "
+    >
+      <mat-error *ngIf="formControls.description.errors.required">
+        {{ 'Required field' }}
+      </mat-error>
+    </ng-container>
+  </div>
+</form>
