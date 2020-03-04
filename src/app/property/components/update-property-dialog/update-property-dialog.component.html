@@ -8,9 +8,15 @@
     mat-icon-button
     aria-label="Close"
     [mat-dialog-close]
+    [disabled]="isFormSubmitting"
   >
     <mat-icon>clear</mat-icon>
   </button>
 
-  <app-modify-property-form [title]="data.title" [description]="data.description"></app-modify-property-form>
+  <app-modify-property-form
+    [isFormSubmitting]="isFormSubmitting"
+    [title]="data.title"
+    [description]="data.description"
+    (messageFormSubmitted)="onMessageFormSubmitted($event)">
+  </app-modify-property-form>
 </div>

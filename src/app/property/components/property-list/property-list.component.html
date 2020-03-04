@@ -2,9 +2,7 @@
   <app-property-item class="item-wrap"
                      *ngFor="let property of (properties$ | async)"
                      [property]="property"
-                     [id]="property.id"
-                     [title]="property.title"
-                     [description]="property.description"
+                     [isActionButtonsDisabled]="isRemovingProcess.get(property.id)"
                      (updateButtonClicked)="onUpdateButtonClicked($event)"
                      (removeButtonClicked)="onRemoveButtonClicked($event)">
   </app-property-item>

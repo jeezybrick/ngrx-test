@@ -1,17 +1,17 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatDialogConfig } from '@angular/material/dialog/dialog-config';
 
 import { Observable } from 'rxjs';
 import { SubSink } from 'subsink';
-import { filter } from 'rxjs/operators';
+import { filter, finalize } from 'rxjs/operators';
 
 import { PropertyService } from '@app/property/services/property.service';
-import { Property } from '@app/property/interfaces/property.interface';
+import { Property } from '@app/property/models/property.model';
 import { AreYouSureDialogComponent } from '@shared/components/are-you-sure-dialog/are-you-sure-dialog.component';
 import { AreYouSureDialogData } from '@shared/interfaces/are-you-sure-dialog-data.interface';
 import { AddPropertyDialogComponent } from '@app/property/components/add-property-dialog/add-property-dialog.component';
 import { UpdatePropertyDialogComponent } from '@app/property/components/update-property-dialog/update-property-dialog.component';
-import { MatDialogConfig } from '@angular/material/dialog/dialog-config';
 
 @Component({
   selector: 'app-property-list',
@@ -20,6 +20,7 @@ import { MatDialogConfig } from '@angular/material/dialog/dialog-config';
 })
 export class PropertyListComponent implements OnInit, OnDestroy {
   public properties$: Observable<Property[]>;
+  public isRemovingProcess: Map<number, boolean> = new Map<number, boolean>();
 
   private subs = new SubSink();
 
@@ -45,7 +46,7 @@ export class PropertyListComponent implements OnInit, OnDestroy {
 
   public onUpdateButtonClicked(property: Property): void {
     this.dialog.open(
-      UpdatePropertyDialogComponent, this.getModifyPropertiesDialogConfig(property)
+      UpdatePropertyDialogComponent, this.getModifyPropertiesDialogConfig({...property})
     );
   }
 
@@ -65,7 +66,13 @@ export class PropertyListComponent implements OnInit, OnDestroy {
   }
 
   private removeProperty(propertyId: number): void {
-    this.propertyService.removeProperty(propertyId);
+    this.isRemovingProcess.set(propertyId, true);
+
+    this.subs.sink = this.propertyService.removeProperty(propertyId)
+      .pipe(
+        finalize(() => this.isRemovingProcess.set(propertyId, false))
+      )
+      .subscribe();
   }
 
   private getAreYouSureDialogData(): AreYouSureDialogData {

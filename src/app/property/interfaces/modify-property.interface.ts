@@ -1,5 +1,4 @@
-export interface Property {
-  id: number;
+export interface ModifyProperty {
   title: string;
   description: string;
 }

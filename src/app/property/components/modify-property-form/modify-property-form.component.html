@@ -53,4 +53,13 @@
       </mat-error>
     </ng-container>
   </div>
+
+  <div class="actions-wrap" *ngIf="!isFormSubmitting; else loaderTemplate">
+    <button mat-flat-button color="primary" [disabled]="!modifyPropertyForm.valid">Submit</button>
+  </div>
+
 </form>
+
+<ng-template #loaderTemplate>
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</ng-template>

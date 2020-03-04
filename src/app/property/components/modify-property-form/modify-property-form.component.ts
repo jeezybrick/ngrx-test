@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+import { ModifyProperty } from '@app/property/interfaces/modify-property.interface';
+
 @Component({
   selector: 'app-modify-property-form',
   templateUrl: './modify-property-form.component.html',
@@ -17,7 +19,8 @@ export class ModifyPropertyFormComponent implements OnInit {
 
   @Input() title: string;
   @Input() description: string;
-  @Output() messageFormSubmitted: EventEmitter<any> = new EventEmitter<any>();
+  @Input() isFormSubmitting: boolean = false;
+  @Output() messageFormSubmitted: EventEmitter<ModifyProperty> = new EventEmitter<ModifyProperty>();
 
   constructor(private formBuilder: FormBuilder) {
   }
@@ -32,6 +35,15 @@ export class ModifyPropertyFormComponent implements OnInit {
 
   public onFormSubmit(): void {
 
+    if (!this.modifyPropertyForm.valid) {
+      return;
+    }
+
+    const {title, description} = this.modifyPropertyForm.value;
+    this.messageFormSubmitted.emit({
+      title,
+      description
+    });
   }
 
   private initModifyDiscussionForm(): void {

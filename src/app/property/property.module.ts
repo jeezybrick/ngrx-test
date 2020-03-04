@@ -6,6 +6,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { SharedModule } from '@shared/shared.module';
 import { PropertyRoutingModule } from '@app/property/property-routing.module';
@@ -32,7 +33,8 @@ import { ModifyPropertyFormComponent } from '@app/property/components/modify-pro
     MatDialogModule,
     MatIconModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatProgressBarModule
   ],
   entryComponents: [AddPropertyDialogComponent, UpdatePropertyDialogComponent]
 })
