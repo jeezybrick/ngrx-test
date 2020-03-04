@@ -8,13 +8,13 @@
     mat-icon-button
     aria-label="Close"
     [mat-dialog-close]
-    [disabled]="isFormSubmitting"
+    [disabled]="isFormSubmitting$ | async"
   >
     <mat-icon>clear</mat-icon>
   </button>
 
   <app-modify-property-form
-    [isFormSubmitting]="isFormSubmitting"
+    [isFormSubmitting]="isFormSubmitting$ | async"
     [title]="data.title"
     [description]="data.description"
     (messageFormSubmitted)="onMessageFormSubmitted($event)">

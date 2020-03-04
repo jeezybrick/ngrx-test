@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { BehaviorSubject, NEVER, Observable, of } from 'rxjs';
+import { NEVER, Observable, of } from 'rxjs';
 import { map, delay, tap } from 'rxjs/operators';
 
 import { Property } from '@app/property/models/property.model';
@@ -13,13 +13,13 @@ const propertiesListStorageKey = 'properties';
   providedIn: 'root'
 })
 export class PropertyService {
-  private propertiesSource: BehaviorSubject<Property[]> = new BehaviorSubject<Property[]>(this.getPropertiesFromStorage());
+  private properties: Property[] = this.getPropertiesFromStorage();
   private readonly fakeDelay: number = 500;
 
   constructor(private storageService: StorageService) {}
 
   public getProperties(): Observable<Property[]> {
-    return this.propertiesSource.asObservable()
+    return of(this.properties)
       .pipe(
         map((properties: Property[]) => {
           return properties.sort((a: Property, b: Property) => {
@@ -35,7 +35,7 @@ export class PropertyService {
     return of(item).pipe(
       delay(this.fakeDelay),
       tap(() => {
-        this.setProperties([...this.getPropertiesAsValue(), item]);
+        this.setProperties([...this.properties, item]);
       })
     );
   }
@@ -44,7 +44,7 @@ export class PropertyService {
     const index = this.getIndex(propertyId);
 
     if (index > -1) {
-      const list = this.getPropertiesAsValue();
+      const list = this.properties;
       const updatedItem = this.getUpdatedItem(list[index], updatedFields);
       const listWithUpdatedItem = [...list.filter((item: Property) => item.id !== propertyId), updatedItem];
 
@@ -63,7 +63,7 @@ export class PropertyService {
     const index = this.getIndex(propertyId);
 
     if (index > -1) {
-      const list = this.getPropertiesAsValue();
+      const list = this.properties;
       const removedItem = {...list[index]};
       const listWithoutRemovedItem = list.filter((item: Property) => item.id !== propertyId);
 
@@ -78,7 +78,7 @@ export class PropertyService {
     return NEVER;
   }
 
-  private getIndex(itemId: number, list: Property[] = this.getPropertiesAsValue()): number {
+  private getIndex(itemId: number, list: Property[] = this.properties): number {
     return list.findIndex((property: Property) => property.id === itemId);
   }
 
@@ -89,12 +89,9 @@ export class PropertyService {
     };
   }
 
-  private getPropertiesAsValue(): Property[] {
-    return this.propertiesSource.getValue();
-  }
 
   private setProperties(list: Property[], isWriteToStorage: boolean = true): void {
-    this.propertiesSource.next(list);
+     this.properties = list;
 
     if(isWriteToStorage) {
       this.setPropertiesToStorage(list);
