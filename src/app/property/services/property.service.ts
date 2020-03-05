@@ -16,15 +16,23 @@ export class PropertyService {
   private properties: Property[] = this.getPropertiesFromStorage();
   private readonly fakeDelay: number = 500;
 
-  constructor(private storageService: StorageService) {}
+  constructor(private storageService: StorageService) {
+  }
+
+  public setProperties(list: Property[], isWriteToStorage: boolean = true): void {
+    this.properties = list;
+
+    if (isWriteToStorage) {
+      this.setPropertiesToStorage(list);
+    }
+
+  }
 
   public getProperties(): Observable<Property[]> {
-    return of(this.properties)
+    return of(this.getPropertiesAsValue())
       .pipe(
         map((properties: Property[]) => {
-          return properties.sort((a: Property, b: Property) => {
-            return a.createdAt - b.createdAt;
-          });
+          return this.sortByDate(properties);
         })
       );
   }
@@ -35,7 +43,7 @@ export class PropertyService {
     return of(item).pipe(
       delay(this.fakeDelay),
       tap(() => {
-        this.setProperties([...this.properties, item]);
+        this.setProperties([...this.getPropertiesAsValue(), item]);
       })
     );
   }
@@ -44,7 +52,7 @@ export class PropertyService {
     const index = this.getIndex(propertyId);
 
     if (index > -1) {
-      const list = this.properties;
+      const list = this.getPropertiesAsValue();
       const updatedItem = this.getUpdatedItem(list[index], updatedFields);
       const listWithUpdatedItem = [...list.filter((item: Property) => item.id !== propertyId), updatedItem];
 
@@ -63,7 +71,7 @@ export class PropertyService {
     const index = this.getIndex(propertyId);
 
     if (index > -1) {
-      const list = this.properties;
+      const list = this.getPropertiesAsValue();
       const removedItem = {...list[index]};
       const listWithoutRemovedItem = list.filter((item: Property) => item.id !== propertyId);
 
@@ -78,7 +86,13 @@ export class PropertyService {
     return NEVER;
   }
 
-  private getIndex(itemId: number, list: Property[] = this.properties): number {
+  public sortByDate(properties: Property[]): Property[] {
+    return properties.sort((a: Property, b: Property) => {
+      return a.createdAt - b.createdAt;
+    });
+  }
+
+  private getIndex(itemId: number, list: Property[] = this.getPropertiesAsValue()): number {
     return list.findIndex((property: Property) => property.id === itemId);
   }
 
@@ -89,14 +103,8 @@ export class PropertyService {
     };
   }
 
-
-  private setProperties(list: Property[], isWriteToStorage: boolean = true): void {
-     this.properties = list;
-
-    if(isWriteToStorage) {
-      this.setPropertiesToStorage(list);
-    }
-
+  private getPropertiesAsValue(): Property[] {
+    return this.properties;
   }
 
   private getPropertiesFromStorage(): Property[] {

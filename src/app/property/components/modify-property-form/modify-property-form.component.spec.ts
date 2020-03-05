@@ -1,6 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { By } from '@angular/platform-browser';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -45,7 +44,7 @@ describe('ModifyPropertyFormComponent', () => {
 
   it('form should be invalid initially', () => {
     component.ngOnInit();
-    expect(component.modifyPropertyForm.valid).toBe(false);
+    expect(component.modifyPropertyForm.valid).toBeFalse();
   });
 
   it('form should be invalid with empty title and description', () => {
@@ -57,7 +56,7 @@ describe('ModifyPropertyFormComponent', () => {
     component.description = mockData.description;
     component.ngOnInit();
 
-    expect(component.modifyPropertyForm.valid).toBe(false);
+    expect(component.modifyPropertyForm.valid).toBeFalse();
   });
 
   it('form should be invalid with empty title', () => {
@@ -70,7 +69,7 @@ describe('ModifyPropertyFormComponent', () => {
 
     component.ngOnInit();
 
-    expect(component.modifyPropertyForm.valid).toBe(false);
+    expect(component.modifyPropertyForm.valid).toBeFalse();
   });
 
   it('form should be invalid with empty description', () => {
@@ -82,7 +81,7 @@ describe('ModifyPropertyFormComponent', () => {
     component.description = mockData.description;
     component.ngOnInit();
 
-    expect(component.modifyPropertyForm.valid).toBe(false);
+    expect(component.modifyPropertyForm.valid).toBeFalse();
   });
 
   it('form should be invalid with over-maxlength title', () => {
@@ -96,7 +95,7 @@ describe('ModifyPropertyFormComponent', () => {
 
     component.ngOnInit();
 
-    expect(component.modifyPropertyForm.valid).toBe(false);
+    expect(component.modifyPropertyForm.valid).toBeFalse();
   });
 
   it('form should be invalid with over-maxlength description', () => {
@@ -111,7 +110,7 @@ describe('ModifyPropertyFormComponent', () => {
     component.ngOnInit();
     fixture.detectChanges();
 
-    expect(component.modifyPropertyForm.valid).toBe(false);
+    expect(component.modifyPropertyForm.valid).toBeFalse();
   });
 
   it('form should be valid with valid fields', () => {
@@ -123,7 +122,7 @@ describe('ModifyPropertyFormComponent', () => {
     component.description = mockData.description;
     component.ngOnInit();
 
-    expect(component.modifyPropertyForm.valid).toBe(true);
+    expect(component.modifyPropertyForm.valid).toBeTrue();
   });
 
   it('isFormSubmitting variable should be true after form submitted', () => {
@@ -136,7 +135,7 @@ describe('ModifyPropertyFormComponent', () => {
     component.description = mockData.description;
     component.ngOnInit();
     component.messageFormSubmitted.subscribe((res: ModifyProperty) => {
-      expect(component.modifyPropertyForm.valid).toBe(true);
+      expect(component.modifyPropertyForm.valid).toBeTrue();
     });
 
     component.onFormSubmit();
@@ -191,7 +190,7 @@ describe('ModifyPropertyFormComponent', () => {
 
     fixture.detectChanges();
 
-    expect(submitButtonElement.disabled).toBe(true);
+    expect(submitButtonElement.disabled).toBeTrue();
 
   });
 
@@ -212,7 +211,7 @@ describe('ModifyPropertyFormComponent', () => {
 
     fixture.detectChanges();
 
-    expect(submitButtonElement.disabled).toBe(false);
+    expect(submitButtonElement.disabled).toBeFalse();
 
   });
 

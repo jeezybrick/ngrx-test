@@ -57,7 +57,7 @@ describe('AddPropertyDialogComponent', () => {
     mockStore.refreshState();
     fixture.detectChanges();
 
-    expect(closeButtonElement.disabled).toBe(false);
+    expect(closeButtonElement.disabled).toBeFalse();
 
   });
 
@@ -69,7 +69,7 @@ describe('AddPropertyDialogComponent', () => {
     mockStore.refreshState();
     fixture.detectChanges();
 
-    expect(closeButtonElement.disabled).toBe(true);
+    expect(closeButtonElement.disabled).toBeTrue();
 
   });
 
