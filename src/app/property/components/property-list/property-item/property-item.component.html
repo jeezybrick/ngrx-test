@@ -10,14 +10,16 @@
   </mat-card-content>
   <mat-card-actions class="actions-wrap">
 
-    <button mat-button
+    <button class="remove"
+            mat-button
             color="warn"
             (click)="removeButtonClicked.emit(property.id)"
             [disabled]="isActionButtonsDisabled">
       remove
     </button>
 
-    <button mat-button
+    <button class="update"
+            mat-button
             (click)="updateButtonClicked.emit(property)"
             [disabled]="isActionButtonsDisabled">
       update
