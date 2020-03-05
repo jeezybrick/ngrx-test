@@ -12,10 +12,12 @@ import { SharedModule } from '@shared/shared.module';
 import { metaReducers, reducers } from '@app/reducers';
 import { environment } from '@environments/environment';
 import { AppEffects } from '@app/app.effects';
+import { TestComponent } from './test/test.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    TestComponent
   ],
   imports: [
     BrowserModule,
