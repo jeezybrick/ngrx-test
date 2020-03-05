@@ -11,13 +11,10 @@ import { AppRoutingModule } from '@app/app-routing.module';
 import { SharedModule } from '@shared/shared.module';
 import { metaReducers, reducers } from '@app/reducers';
 import { environment } from '@environments/environment';
-import { AppEffects } from '@app/app.effects';
-import { TestComponent } from './test/test.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    TestComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +29,7 @@ import { TestComponent } from './test/test.component';
       }
     }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
-    EffectsModule.forRoot([AppEffects])
+    EffectsModule.forRoot([])
   ],
   bootstrap: [AppComponent]
 })

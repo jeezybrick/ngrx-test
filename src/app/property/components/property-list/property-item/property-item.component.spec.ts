@@ -9,6 +9,8 @@ import { Property } from '@app/property/models/property.model';
 describe('PropertyItemComponent', () => {
   let component: PropertyItemComponent;
   let fixture: ComponentFixture<PropertyItemComponent>;
+  let updateButtonElement: HTMLButtonElement;
+  let removeButtonElement: HTMLButtonElement;
   let hostElement: any;
 
   const mockItem: Property = {
@@ -36,7 +38,10 @@ describe('PropertyItemComponent', () => {
     fixture = TestBed.createComponent(PropertyItemComponent);
     component = fixture.componentInstance;
     hostElement = fixture.nativeElement;
+
     component.property = {...mockItem} as Property;
+    removeButtonElement = hostElement.querySelector('.remove');
+    updateButtonElement = hostElement.querySelector('.update');
 
     fixture.detectChanges();
   });
@@ -46,8 +51,6 @@ describe('PropertyItemComponent', () => {
   });
 
   it('#updateButtonClicked should trigger on update button click', () => {
-    const updateButtonElement: HTMLInputElement = hostElement.querySelector('.update');
-
     component.updateButtonClicked.subscribe((res: Property) => {
       expect(res).toEqual(mockItem);
     });
@@ -57,8 +60,6 @@ describe('PropertyItemComponent', () => {
   });
 
   it('#removeButtonClicked should trigger on remove button click', () => {
-    const removeButtonElement: HTMLInputElement = hostElement.querySelector('.remove');
-
     component.removeButtonClicked.subscribe((itemId: number) => {
       expect(itemId).toEqual(mockItem.id);
     });
@@ -68,9 +69,6 @@ describe('PropertyItemComponent', () => {
   });
 
   it('action buttons should be disabled if isActionButtonsDisabled is true', () => {
-    const removeButtonElement: HTMLInputElement = hostElement.querySelector('.remove');
-    const updateButtonElement: HTMLInputElement = hostElement.querySelector('.update');
-
     component.isActionButtonsDisabled = true;
     fixture.detectChanges();
 
@@ -80,9 +78,6 @@ describe('PropertyItemComponent', () => {
   });
 
   it('action buttons should be enabled if isActionButtonsDisabled is false', () => {
-    const removeButtonElement: HTMLInputElement = hostElement.querySelector('.remove');
-    const updateButtonElement: HTMLInputElement = hostElement.querySelector('.update');
-
     component.isActionButtonsDisabled = false;
     fixture.detectChanges();
 

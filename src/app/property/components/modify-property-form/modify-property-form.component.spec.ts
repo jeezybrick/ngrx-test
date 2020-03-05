@@ -12,14 +12,15 @@ import { ModifyPropertyFormComponent } from '@app/property/components/modify-pro
 import { SharedModule } from '@shared/shared.module';
 import { ModifyProperty } from '@app/property/interfaces/modify-property.interface';
 
-
 describe('ModifyPropertyFormComponent', () => {
   let component: ModifyPropertyFormComponent;
   let fixture: ComponentFixture<ModifyPropertyFormComponent>;
+  let hostElement: any;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule,
+      imports: [
+        NoopAnimationsModule,
         SharedModule,
         MatCardModule,
         MatButtonModule,
@@ -36,6 +37,7 @@ describe('ModifyPropertyFormComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ModifyPropertyFormComponent);
     component = fixture.componentInstance;
+    hostElement = fixture.nativeElement;
   });
 
   it('should create', () => {
@@ -87,7 +89,7 @@ describe('ModifyPropertyFormComponent', () => {
   it('form should be invalid with over-maxlength title', () => {
     const maxLength = component.maxLength.title;
     const mockData: ModifyProperty = {
-      title: new Array(maxLength + 2).join( 't' ),
+      title: new Array(maxLength + 2).join('t'),
       description: 'description'
     };
     component.title = mockData.title;
@@ -102,7 +104,7 @@ describe('ModifyPropertyFormComponent', () => {
     const maxLength = component.maxLength.description;
     const mockData: ModifyProperty = {
       title: 'title',
-      description: new Array(maxLength + 2).join( 't' )
+      description: new Array(maxLength + 2).join('t')
     };
     component.title = mockData.title;
     component.description = mockData.description;
@@ -174,8 +176,6 @@ describe('ModifyPropertyFormComponent', () => {
   });
 
   it('submit button should be disabled with invalid form', () => {
-    const hostElement = fixture.nativeElement;
-
     fixture.detectChanges();
 
     const submitButtonElement: HTMLInputElement = hostElement.querySelector('button');
@@ -195,8 +195,6 @@ describe('ModifyPropertyFormComponent', () => {
   });
 
   it('submit button should be enabled with valid form', () => {
-    const hostElement = fixture.nativeElement;
-
     fixture.detectChanges();
 
     const submitButtonElement: HTMLInputElement = hostElement.querySelector('button');

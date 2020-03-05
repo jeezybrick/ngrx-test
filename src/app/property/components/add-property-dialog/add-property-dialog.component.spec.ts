@@ -17,6 +17,8 @@ describe('AddPropertyDialogComponent', () => {
   let mockStore: MockStore<ModifyPropertyState>;
   let mockIsPropertyModifySelector: MemoizedSelector<ModifyPropertyState, boolean>;
   let mockIsPropertyModifiedSelector: MemoizedSelector<ModifyPropertyState, boolean>;
+  let closeButtonElement: HTMLButtonElement;
+  let hostElement: any;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -43,16 +45,15 @@ describe('AddPropertyDialogComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AddPropertyDialogComponent);
     component = fixture.componentInstance;
+    hostElement = fixture.nativeElement;
 
+    closeButtonElement = hostElement.querySelector('.close-icon');
     mockStore = TestBed.get(Store);
     mockIsPropertyModifySelector = mockStore.overrideSelector(getIsPropertyModifyProcess, false);
     mockIsPropertyModifiedSelector = mockStore.overrideSelector(getIsPropertyModified, false);
   });
 
   it('close button should be enabled if form is not submitting', () => {
-    const hostElement = fixture.nativeElement;
-    const closeButtonElement: HTMLInputElement = hostElement.querySelector('button');
-
     mockIsPropertyModifySelector.setResult(false);
     mockStore.refreshState();
     fixture.detectChanges();
@@ -62,9 +63,6 @@ describe('AddPropertyDialogComponent', () => {
   });
 
   it('close button should be disabled if form is submitting', () => {
-    const hostElement = fixture.nativeElement;
-    const closeButtonElement: HTMLInputElement = hostElement.querySelector('button');
-
     mockIsPropertyModifySelector.setResult(true);
     mockStore.refreshState();
     fixture.detectChanges();
