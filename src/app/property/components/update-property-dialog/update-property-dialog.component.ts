@@ -3,13 +3,15 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { shareReplay, filter } from 'rxjs/operators';
+import { shareReplay, filter, take } from 'rxjs/operators';
 import { SubSink } from 'subsink';
+import { ofType, Actions } from '@ngrx/effects';
 
 import { ModifyProperty } from '@app/property/interfaces/modify-property.interface';
 import { Property } from '@app/property/models/property.model';
 import { updateProperty } from '@app/property/actions/property.actions';
 import { getIsPropertyModifyProcess, getIsPropertyModified } from '@app/reducers';
+import * as propertyActions from '../../actions/property.actions';
 
 @Component({
   selector: 'app-update-property-dialog',
@@ -22,6 +24,7 @@ export class UpdatePropertyDialogComponent implements OnInit, OnDestroy {
   private subs = new SubSink();
 
   constructor(
+    private actions$: Actions,
     private dialogRef: MatDialogRef<UpdatePropertyDialogComponent>,
     @Inject(MAT_DIALOG_DATA)
     public data: Partial<Property>,
@@ -34,9 +37,10 @@ export class UpdatePropertyDialogComponent implements OnInit, OnDestroy {
         shareReplay(1)
       );
 
-    this.subs.sink = this.store.select(getIsPropertyModified)
+      this.subs.sink = this.actions$
       .pipe(
-        filter((value: boolean) => value)
+        ofType(propertyActions.addPropertySuccess),
+        take(1)
       )
       .subscribe(() => {
         this.dialogRef.close();

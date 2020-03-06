@@ -2,14 +2,16 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { shareReplay, filter } from 'rxjs/operators';
+import { shareReplay, filter, take } from 'rxjs/operators';
 import { SubSink } from 'subsink';
+import { Actions, ofType } from '@ngrx/effects';
 
 import { ModifyProperty } from '@app/property/interfaces/modify-property.interface';
 import { MatDialogRef } from '@angular/material/dialog';
 import { UpdatePropertyDialogComponent } from '@app/property/components/update-property-dialog/update-property-dialog.component';
 import { addProperty } from '@app/property/actions/property.actions';
 import { getIsPropertyModifyProcess, getIsPropertyModified } from '@app/reducers';
+import * as propertyActions from '../../actions/property.actions';
 
 @Component({
   selector: 'app-add-property-dialog',
@@ -21,7 +23,8 @@ export class AddPropertyDialogComponent implements OnInit, OnDestroy {
 
   private subs = new SubSink();
 
-  constructor(private dialogRef: MatDialogRef<UpdatePropertyDialogComponent>,
+  constructor(private actions$: Actions,
+              private dialogRef: MatDialogRef<UpdatePropertyDialogComponent>,
               private store: Store<any>) {}
 
   ngOnInit(): void {
@@ -30,9 +33,10 @@ export class AddPropertyDialogComponent implements OnInit, OnDestroy {
         shareReplay(1)
       );
 
-    this.subs.sink = this.store.select(getIsPropertyModified)
+    this.subs.sink = this.actions$
       .pipe(
-        filter((value: boolean) => value)
+        ofType(propertyActions.addPropertySuccess),
+        take(1)
       )
       .subscribe(() => {
         this.dialogRef.close();
